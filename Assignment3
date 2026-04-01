@@ -1,0 +1,31 @@
+'''
+Rayaan Hassan
+CMSC 111
+Spring 2026
+Week 9 Assignment 3
+'''
+
+import json
+
+filename = input("Enter the JSON file name: ")
+
+try: 
+    with open(filename, 'r') as file:
+        data = json.load(file) 
+        print("JSON loaded successfully!")
+        print("Content:")
+        contact_list = data["contacts"] 
+        print(contact_list[0]["name"])
+        print(contact_list[1]["name"])
+        #print(data)
+        
+except FileNotFoundError:
+    print("Error: File not found.")
+
+except json.JSONDecodeError as e:
+    print("Error: Invalid JSON format.")
+    print(f"Details: {e}")
+    
+except Exception as e:
+    print("An unexpected error occurred.")
+    print(f"Details: {e}")

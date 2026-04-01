@@ -1,0 +1,61 @@
+'''
+Rayaan Hassan
+CMSC 111
+Spring 2026
+Week 9 Assignment 4
+'''
+
+import csv
+filename = input("Enter CSV file name: ")
+
+cleaned_data = []
+
+try: 
+    with open(filename, 'r') as file:
+        reader = csv.DictReader(file)
+
+        print("\nProcessing data...\n")
+
+        for row_num, row in enumerate(reader, start=1):
+            cleaned_row ={}
+
+            try:
+                name = row.get("name", "").strip()
+                age = int(row.get("age", "").strip())
+                salary = row.get("salary", "").strip()
+
+                if not name:
+                    print(f"Row {row_num}: Missing name -> skipped")
+                    continue
+
+                if not age:
+                    print(f"Row {row_num}: Missing age -> skipped")
+                    continue
+
+                else:
+                    age = int(age)
+
+                if not salary:
+                    print(f"Row {row_num}: Missing salary -> defaulting to 0.0")
+                    salary = 0.0
+                else:
+                    salary = float(salary)  
+
+                cleaned_row["name"] = name
+                cleaned_row["age"] = age
+                cleaned_row["salary"] = salary
+
+                cleaned_data.append(cleaned_row)
+            except ValueError:
+                print(f"Row {row_num}: Invalid data type -> skipped")
+                continue
+            print("Cleaned Data:")
+            for row in cleaned_data:
+                print(row)
+
+except FileNotFoundError:
+    print("Error: File not found.")
+
+except Exception as e:
+    print(f"Unexpected error: {e}")
+    
